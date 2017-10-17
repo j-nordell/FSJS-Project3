@@ -2,37 +2,49 @@
 // Form traversal and validation
 // Jennifer Nordell
 
-// To initialize the page
-setFocusOnElement(document.getElementById('name'));
-createOtherField();
-displayOtherField("none");
 
+// ========================
 // Global variables and constants
+// ========================
+
 const jobRoleSelect = document.getElementById("title");
 const tshirtSelect = document.getElementById("design");
-const tshirtColors = document.getElementById("colors-js-puns");
+const tshirtColors = document.querySelectorAll("#color option");
 
+
+// ========================
+// To initialize the page
+// ========================
+
+setFocusOnElement(document.getElementById('name'));
+displayOtherField("none");
+stripExtraColorText();
+
+
+// ========================
 // Helper functions
+// ========================
 
 function setFocusOnElement(element) {
     element.focus();
 }
 
-function createOtherField() {
-    let otherFieldParent = document.getElementsByTagName('fieldset')[0];
-    let inputField =document.createElement("input");
-    inputField.id = "other-title";
-    inputField.placeholder = "Your Job Role";
-    otherFieldParent.appendChild(inputField);
-}
-
 function displayOtherField(setting) {
-    let otherField = document.getElementById("other-title");
+    let otherField = document.getElementById("other-role");
     otherField.style.display = setting;
 }
 
+function stripExtraColorText() {
+    for(let i = 0; i < tshirtColors.length; i++) {
+       // console.log(tshirtColors);
+       tshirtColors[i].innerHTML = tshirtColors[i].innerHTML.replace(/\((.){1,}\)/g, "");
+    }
+}
 
-//Event Listeners
+
+// ========================
+// Event Listeners
+// ========================
 
 jobRoleSelect.addEventListener("change", function() {
     if(this.value == "other") {
@@ -42,6 +54,3 @@ jobRoleSelect.addEventListener("change", function() {
     }
 });
 
-tshirtSelect.addEventListener("change", function() {
-    console.log(this.value);
-});
