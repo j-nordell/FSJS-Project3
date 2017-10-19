@@ -279,6 +279,9 @@ document.getElementById("cc-num").addEventListener("input", createListener(isVal
 document.getElementById("zip").addEventListener("input", createListener(isValidZipcode));
 document.getElementById("cvv").addEventListener("input", createListener(isValidCVV));
 
+document.getElementById("cc-num").addEventListener("blur", e => {
+    e.target.value = formatCreditCard(e.target.value);
+});
 
 // ================
 // Validators
@@ -293,7 +296,7 @@ function isValidEmail(email) {
 }
 
 function isValidCardNumber(cardNumber) {
-    return /^\D*\d{4}\D*\D*\d{4}\D*\d{4}\D*\d{4}D*$/.test(cardNumber);
+    return /^\d{4}\D*\D*\d{4}\D*\d{4}\D*\d{4}D*$/.test(cardNumber);
 }
 
 function isValidZipcode(zipcode) {
@@ -303,3 +306,18 @@ function isValidZipcode(zipcode) {
 function isValidCVV(cvv) {
     return /^\d{3}$/.test(cvv);
 } 
+
+
+// ==================
+// Field formatting
+// ==================
+
+function formatCreditCard(cardNumber) {
+    const regex = /^(\d{4})\D*\D*(\d{4})\D*(\d{4})\D*(\d{4})D*$/;
+    return cardNumber.replace(regex, `$1 $2 $3 $4`);
+}
+
+
+
+
+
