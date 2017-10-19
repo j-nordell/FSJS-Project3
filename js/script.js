@@ -11,8 +11,11 @@ const jobRoleSelect = document.getElementById("title");
 const designSelect = document.getElementById("design");
 const designOptions = document.querySelectorAll("#design option")
 const colorSelect = document.getElementById("color");
+const activitySelect = document.getElementsByClassName("activities");
+const activitiesSelections = document.querySelectorAll(".activities input");
 let colorOptions = document.querySelectorAll("#color option");
 let colorDict = {};
+let activitiesCost = 0;
 
 
 // ========================
@@ -28,6 +31,9 @@ createSelectColorOption();
 colorOptions = document.querySelectorAll("#color option");
 setupColorDict();
 populateShirtLists();
+listenToActivitySelection();
+createCostText();
+updateCostText();
 
 
 // ========================
@@ -86,6 +92,42 @@ function populateShirtLists() {
     }
 }
 
+function createCostText() {
+    let totalCostParagraph = document.createElement("p");
+    let totalCostText = document.createTextNode(`Total cost: $${activitiesCost}`);
+    totalCostParagraph.appendChild(totalCostText);
+    totalCostParagraph.setAttribute("id", "cost");
+    activitySelect[0].appendChild(totalCostParagraph);
+}
+
+function updateCostText() {
+    let costText = document.getElementById("cost");
+    
+    costText.innerHTML = `Total cost: $${activitiesCost}`;
+
+    if(activitiesCost) {
+        costText.style.display = "block";
+    } else {
+        costText.style.display = "none";
+    }
+}
+
+function adjustCost(activityIndex) {
+
+    let adjustment = 0;
+    if(activityIndex) {
+        adjustment = 100;
+    } else {
+        adjustment = 200;
+    }
+
+    if(activitiesSelections[activityIndex].checked) {
+        activitiesCost += adjustment;
+    } else {
+        activitiesCost -= adjustment;
+    }
+}
+
 // ========================
 // Event Listeners
 // ========================
@@ -105,6 +147,16 @@ designSelect.addEventListener("change", function() {
 });
 
 // Activity Registration
+function listenToActivitySelection() {
+
+    for(let i = 0; i < activitiesSelections.length; i++) {
+        activitiesSelections[i].addEventListener("click", function() {
+            // console.log("I love Michael");
+            adjustCost(i);
+            updateCostText(i);
+        });
+    }
+}
 
 // Payment Info
 
