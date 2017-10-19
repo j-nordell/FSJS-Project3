@@ -26,7 +26,6 @@ resetDefaultPayment();
 stripExtraColorText();
 createSelectColorOption();
 colorOptions = document.querySelectorAll("#color option");
-//console.log(colorOptions);
 setupColorDict();
 populateShirtLists();
 
@@ -72,15 +71,13 @@ function setupColorDict() {
 
 function populateShirtLists() {
     let designSelection = designSelect.options[designSelect.selectedIndex].innerHTML;
-    //console.log(designSelection);
 
-    // console.log(colorSelect.options);
     while(colorSelect.options.length) {
         colorSelect.remove(0);
     }
 
     let colors = colorDict[designSelection];
-    console.log(colors);
+
     if(colors) {
         for(let i = 0; i < colors.length; i++) {
             let color = new Option(colors[i], i);
