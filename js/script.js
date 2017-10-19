@@ -90,6 +90,7 @@ function populateShirtLists() {
 // Event Listeners
 // ========================
 
+// Job role
 jobRoleSelect.addEventListener("change", function() {
     if(this.value == "other") {
         displayOtherField("block");
@@ -98,6 +99,12 @@ jobRoleSelect.addEventListener("change", function() {
     }
 });
 
+// T-Shirt info
 designSelect.addEventListener("change", function() {
     populateShirtLists();
 });
+
+// Activity Registration
+
+// Payment Info
+
