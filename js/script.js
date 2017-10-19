@@ -11,14 +11,15 @@
 
 const jobRoleSelect = document.getElementById("title");
 const designSelect = document.getElementById("design");
-const designOptions = document.querySelectorAll("#design option");
+const designOptions = designSelect.getElementsByTagName("option");
 const colorSelect = document.getElementById("color");
 const activitySelect = document.getElementsByClassName("activities");
-const activitiesSelections = document.querySelectorAll(".activities input");
+const activitiesSelections = activitySelect[0].getElementsByTagName("input");
 const paymentSelect = document.getElementById("payment");
 const colorDict = {};
+
 let activitiesCost = 0;
-let colorOptions = document.querySelectorAll("#color option");
+let colorOptions = document.getElementById("color").getElementsByTagName("option");
 
 
 // ========================
@@ -31,7 +32,7 @@ displayOtherField("none");
 resetDefaultPayment();
 stripExtraColorText();
 createSelectColorOption();
-colorOptions = document.querySelectorAll("#color option");
+colorOptions = document.getElementById("color").getElementsByTagName("option");
 setupColorDict();
 populateShirtLists();
 listenToActivitySelection();
@@ -65,9 +66,11 @@ function createSelectColorOption() {
 }
 
 function resetDefaultPayment() {
-    document.getElementById("credit-card").style.display = "none";
-    document.getElementById("paypal").style.display = "none";
-    document.getElementById("bitcoin").style.display = "none";
+    const paymentTypes = ["credit-card", "paypal", "bitcoin"];
+
+    for(let i = 0; i < paymentTypes.length; i++) {
+        document.getElementById(paymentTypes[i]).style.display = "none";
+    }
 }
 
 function setupColorDict() {
@@ -96,6 +99,7 @@ function populateShirtLists() {
 function createCostText() {
     const totalCostParagraph = document.createElement("p");
     const totalCostText = document.createTextNode(`Total cost: $${activitiesCost}`);
+
     totalCostParagraph.appendChild(totalCostText);
     totalCostParagraph.setAttribute("id", "cost");
     activitySelect[0].appendChild(totalCostParagraph);
@@ -105,59 +109,29 @@ function updateCostText() {
     const costText = document.getElementById("cost");
     
     costText.innerHTML = `Total cost: $${activitiesCost}`;
-
-    if(activitiesCost) {
-        costText.style.display = "block";
-    } else {
-        costText.style.display = "none";
-    }
+    costText.style.display = activitiesCost ? "block" : "none";
 }
 
 function adjustCost(activityIndex) {
-
     let adjustment = 0;
-    if(activityIndex) {
-        adjustment = 100;
-    } else {
-        adjustment = 200;
-    }
 
-    if(activitiesSelections[activityIndex].checked) {
-        activitiesCost += adjustment;
-    } else {
-        activitiesCost -= adjustment;
-    }
+    adjustment = activityIndex ? 100 : 200;
+    activitiesCost += activitiesSelections[activityIndex].checked ? adjustment : adjustment * -1;
 }
 
 function checkAvailability(activityIndex) {
     switch(activityIndex) {
         case 1:
-            if(activitiesSelections[activityIndex].checked) {
-                activitiesSelections[3].disabled = true;
-            } else {
-                activitiesSelections[3].disabled = false;
-            }
+            activitiesSelections[3].disabled = activitiesSelections[activityIndex].checked;
             break;
         case 2:
-            if(activitiesSelections[activityIndex].checked) {
-                activitiesSelections[4].disabled = true;
-            } else {
-                activitiesSelections[4].disabled = false;
-            }
+            activitiesSelections[4].disabled = activitiesSelections[activityIndex].checked;
             break;
         case 3: 
-            if(activitiesSelections[activityIndex].checked) {
-                activitiesSelections[1].disabled = true;
-            } else {
-                activitiesSelections[1].disabled = false;
-            }
+            activitiesSelections[1].disabled = activitiesSelections[activityIndex].checked;
             break;
         case 4:
-            if(activitiesSelections[activityIndex].checked) {
-                activitiesSelections[2].disabled = true;
-            } else {
-                activitiesSelections[2].disabled = false;
-            }
+            activitiesSelections[2].disabled = activitiesSelections[activityIndex].checked;
             break;
         default:
             break;
@@ -217,11 +191,7 @@ function hideAllWarnings() {
 }
 
 function toggleWarning(show, warning) {
-    if(show) {
-        warning.style.display = "inherit";
-    } else {
-        warning.style.display = "none";
-    }
+    warning.style.display = show ? "inherit" : "none";
 }
 
 
@@ -257,13 +227,11 @@ function listenToActivitySelection() {
 // Payment Info
 paymentSelect.addEventListener("change", function() {
     resetDefaultPayment();
-    if(this.value == "credit card") {
-        document.getElementById("credit-card").style.display = "block";
-    } else if(this.value == "paypal") {
-        document.getElementById("paypal").style.display = "block";
-    } else if(this.value == "bitcoin") {
-        document.getElementById("bitcoin").style.display = "block";
-    }
+ 
+    if(this.value != "credit card") {
+      return document.getElementById(this.value).style.display = "block";
+    } 
+    document.getElementById("credit-card").style.display = "block";
 });
 
 function createListener(validator) {
