@@ -128,6 +128,42 @@ function adjustCost(activityIndex) {
     }
 }
 
+function checkAvailability(activityIndex) {
+    switch(activityIndex) {
+        case 1:
+            if(activitiesSelections[activityIndex].checked) {
+                activitiesSelections[3].disabled = true;
+            } else {
+                activitiesSelections[3].disabled = false;
+            }
+            break;
+        case 2:
+            if(activitiesSelections[activityIndex].checked) {
+                activitiesSelections[4].disabled = true;
+            } else {
+                activitiesSelections[4].disabled = false;
+            }
+            break;
+        case 3: 
+            if(activitiesSelections[activityIndex].checked) {
+                activitiesSelections[1].disabled = true;
+            } else {
+                activitiesSelections[1].disabled = false;
+            }
+            break;
+        case 4:
+            if(activitiesSelections[activityIndex].checked) {
+                activitiesSelections[2].disabled = true;
+            } else {
+                activitiesSelections[2].disabled = false;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
 // ========================
 // Event Listeners
 // ========================
@@ -154,6 +190,7 @@ function listenToActivitySelection() {
             // console.log("I love Michael");
             adjustCost(i);
             updateCostText(i);
+            checkAvailability(i);
         });
     }
 }
