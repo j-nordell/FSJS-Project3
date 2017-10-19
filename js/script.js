@@ -35,6 +35,7 @@ populateShirtLists();
 listenToActivitySelection();
 createCostText();
 updateCostText();
+createWarnings();
 
 
 // ========================
@@ -164,6 +165,10 @@ function checkAvailability(activityIndex) {
     }
 }
 
+function createWarnings() {
+    
+}
+
 
 // ========================
 // Event Listeners
@@ -207,3 +212,7 @@ paymentSelect .addEventListener("change", function() {
     }
 });
 
+
+// ================
+// Validations
+// ================
