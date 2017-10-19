@@ -13,6 +13,7 @@ const designOptions = document.querySelectorAll("#design option")
 const colorSelect = document.getElementById("color");
 const activitySelect = document.getElementsByClassName("activities");
 const activitiesSelections = document.querySelectorAll(".activities input");
+const paymentSelect = document.getElementById("payment");
 let colorOptions = document.querySelectorAll("#color option");
 let colorDict = {};
 let activitiesCost = 0;
@@ -187,7 +188,6 @@ function listenToActivitySelection() {
 
     for(let i = 0; i < activitiesSelections.length; i++) {
         activitiesSelections[i].addEventListener("click", function() {
-            // console.log("I love Michael");
             adjustCost(i);
             updateCostText(i);
             checkAvailability(i);
@@ -196,4 +196,14 @@ function listenToActivitySelection() {
 }
 
 // Payment Info
+paymentSelect .addEventListener("change", function() {
+    resetDefaultPayment();
+    if(this.value == "credit card") {
+        document.getElementById("credit-card").style.display = "block";
+    } else if(this.value == "paypal") {
+        document.getElementById("paypal").style.display = "block";
+    } else if(this.value == "bitcoin") {
+        document.getElementById("bitcoin").style.display = "block";
+    }
+});
 
