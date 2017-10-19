@@ -1,6 +1,8 @@
+"use strict";
 // Project 3 - Full Stack JavaScript Techdegree
 // Form traversal and validation
 // Jennifer Nordell
+
 
 
 // ========================
@@ -9,14 +11,14 @@
 
 const jobRoleSelect = document.getElementById("title");
 const designSelect = document.getElementById("design");
-const designOptions = document.querySelectorAll("#design option")
+const designOptions = document.querySelectorAll("#design option");
 const colorSelect = document.getElementById("color");
 const activitySelect = document.getElementsByClassName("activities");
 const activitiesSelections = document.querySelectorAll(".activities input");
 const paymentSelect = document.getElementById("payment");
-let colorOptions = document.querySelectorAll("#color option");
-let colorDict = {};
+const colorDict = {};
 let activitiesCost = 0;
+let colorOptions = document.querySelectorAll("#color option");
 
 
 // ========================
@@ -47,7 +49,7 @@ function setFocusOnElement(element) {
 }
 
 function displayOtherField(setting) {
-    let otherField = document.getElementById("other-role");
+    const otherField = document.getElementById("other-role");
     otherField.style.display = setting;
 }
 
@@ -58,7 +60,7 @@ function stripExtraColorText() {
 }
 
 function createSelectColorOption() {
-    selectPromptOption = new Option("Please select a T-shirt theme");
+    const selectPromptOption = new Option("Please select a T-shirt theme");
     colorSelect.insertBefore(selectPromptOption, colorOptions[6]);
 }
 
@@ -75,32 +77,32 @@ function setupColorDict() {
 }
 
 function populateShirtLists() {
-    let designSelection = designSelect.options[designSelect.selectedIndex].innerHTML;
+    const designSelection = designSelect.options[designSelect.selectedIndex].innerHTML;
 
     while(colorSelect.options.length) {
         colorSelect.remove(0);
     }
 
-    let colors = colorDict[designSelection];
+    const colors = colorDict[designSelection];
 
     if(colors) {
         for(let i = 0; i < colors.length; i++) {
-            let color = new Option(colors[i], i);
+            const color = new Option(colors[i], i);
             colorSelect.options.add(color);
         }
     }
 }
 
 function createCostText() {
-    let totalCostParagraph = document.createElement("p");
-    let totalCostText = document.createTextNode(`Total cost: $${activitiesCost}`);
+    const totalCostParagraph = document.createElement("p");
+    const totalCostText = document.createTextNode(`Total cost: $${activitiesCost}`);
     totalCostParagraph.appendChild(totalCostText);
     totalCostParagraph.setAttribute("id", "cost");
     activitySelect[0].appendChild(totalCostParagraph);
 }
 
 function updateCostText() {
-    let costText = document.getElementById("cost");
+    const costText = document.getElementById("cost");
     
     costText.innerHTML = `Total cost: $${activitiesCost}`;
 
@@ -163,43 +165,43 @@ function checkAvailability(activityIndex) {
 }
 
 function createWarnings() {
-    let nameWarning = document.createElement("span");
+    const nameWarning = document.createElement("span");
     nameWarning.setAttribute("id", "name-warning");
     nameWarning.classList.add("jn-warning");
-    let nameWarningText = document.createTextNode(`Can only contain letters and spaces`);
-    let nameInput = document.getElementById("name");
+    const nameWarningText = document.createTextNode(`Can only contain constters and spaces`);
+    const nameInput = document.getElementById("name");
     nameWarning.appendChild(nameWarningText);
     nameInput.insertAdjacentElement("afterend", nameWarning);
 
-    let emailWarning = document.createElement("span");
+    const emailWarning = document.createElement("span");
     emailWarning.setAttribute("id", "email-warning");
     emailWarning.classList.add("jn-warning");
-    let emailWarningText = document.createTextNode(`Valid email address required.`);
-    let emailInput = document.getElementById("mail");
+    const emailWarningText = document.createTextNode(`Valid email address required.`);
+    const emailInput = document.getElementById("mail");
     emailWarning.appendChild(emailWarningText);
     emailInput.insertAdjacentElement("afterend", emailWarning);
 
-    let cardNumberWarning = document.createElement("span");
+    const cardNumberWarning = document.createElement("span");
     cardNumberWarning.setAttribute("id", "card-number-warning");
     cardNumberWarning.classList.add("jn-warning");
-    let cardWarningText = document.createTextNode(`Must be 16 digits`);
-    let cardNumberInput = document.getElementById("cc-num");
+    const cardWarningText = document.createTextNode(`Must be 16 digits`);
+    const cardNumberInput = document.getElementById("cc-num");
     cardNumberWarning.appendChild(cardWarningText);
     cardNumberInput.insertAdjacentElement("afterend", cardNumberWarning);
 
-    let zipCodeWarning = document.createElement("span");
+    const zipCodeWarning = document.createElement("span");
     zipCodeWarning.setAttribute("id", "zip-warning");
     zipCodeWarning.classList.add("jn-warning");
-    let zipCodeWarningText = document.createTextNode(`Must be 5 digits`);
-    let zipCodeInput = document.getElementById("zip");
+    const zipCodeWarningText = document.createTextNode(`Must be 5 digits`);
+    const zipCodeInput = document.getElementById("zip");
     zipCodeWarning.appendChild(zipCodeWarningText);
     zipCodeInput.insertAdjacentElement("afterend", zipCodeWarning);
 
-    let cvvWarning = document.createElement("span");
+    const cvvWarning = document.createElement("span");
     cvvWarning.setAttribute("id", "cvv-warning");
     cvvWarning.classList.add("jn-warning");
-    let cvvWarningText = document.createTextNode(`Must be 3 digits`);
-    let cvvInput = document.getElementById("cvv");
+    const cvvWarningText = document.createTextNode(`Must be 3 digits`);
+    const cvvInput = document.getElementById("cvv");
     cvvWarning.appendChild(cvvWarningText);
     cvvInput.insertAdjacentElement("afterend", cvvWarning);
 
@@ -207,11 +209,11 @@ function createWarnings() {
 }
 
 function hideAllWarnings() {
-    document.getElementById("name-warning").style.display = "none";
-    document.getElementById("email-warning").style.display = "none";
-    document.getElementById("card-number-warning").style.display ="none";
-    document.getElementById("zip-warning").style.display = "none";
-    document.getElementById("cvv-warning").style.display = "none";
+    const warningIds = ["name-warning", "email-warning", "card-number-warning", "zip-warning", "cvv-warning"];
+
+    for(let i = 0; i < warningIds.length; i++) {
+        document.getElementById(warningIds[i]).style.display = "none";
+    }
 }
 
 function toggleWarning(show, warning) {
@@ -243,7 +245,6 @@ designSelect.addEventListener("change", function() {
 
 // Activity Registration
 function listenToActivitySelection() {
-
     for(let i = 0; i < activitiesSelections.length; i++) {
         activitiesSelections[i].addEventListener("click", function() {
             adjustCost(i);
@@ -254,7 +255,7 @@ function listenToActivitySelection() {
 }
 
 // Payment Info
-paymentSelect .addEventListener("change", function() {
+paymentSelect.addEventListener("change", function() {
     resetDefaultPayment();
     if(this.value == "credit card") {
         document.getElementById("credit-card").style.display = "block";
