@@ -19,12 +19,15 @@
               
       <fieldset>         
         <legend>Basic Info</legend>
-        
+        <p class="relative">
         <label for="name">Name:</label>
         <input type="text" id="name" name="user_name">
+        </p>
         
+        <p class="relative">
         <label for="mail">Email:</label>
         <input type="email" id="mail" name="user_email">
+        </p>
         
         <label for="title">Job Role</label>
         <select id="title" name="user_title">
@@ -96,21 +99,21 @@
 
         <div id="credit-card" class="credit-card">
 
-          <div class="col-6 col">
+          <div class="col-6 col relative">
             <label for="cc-num">Card Number:</label>
         	  <input id="cc-num" name="user_cc-num" type="text">
           </div>
 
-          <div class="col-3 col">
+          <div class="col-3 col relative">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user_zip" type="text"> 
           </div>
 
-          <div class="col-3 col">
+          <div class="col-3 col relative">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user_cvv" type="text"> 
           </div>
-
+        
           <label for="exp-month">Expiration Date:</label>
           <select id="exp-month" name="user_exp-month">
             <option value="1">1 - January</option>

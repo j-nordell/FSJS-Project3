@@ -72,9 +72,6 @@ function setupColorDict() {
     colorDict[designOptions[0].innerHTML] = [colorOptions[6].innerHTML];
     colorDict[designOptions[1].innerHTML] = [colorOptions[0].innerHTML, colorOptions[1].innerHTML, colorOptions[2].innerHTML];
     colorDict[designOptions[2].innerHTML] = [colorOptions[3].innerHTML, colorOptions[4].innerHTML, colorOptions[5].innerHTML];
-    for(var key in colorDict) {
-        console.log(`Key: ${key}  Value: ${colorDict[key]}`);
-    }
 }
 
 function populateShirtLists() {
@@ -168,6 +165,7 @@ function checkAvailability(activityIndex) {
 function createWarnings() {
     let nameWarning = document.createElement("span");
     nameWarning.setAttribute("id", "name-warning");
+    nameWarning.classList.add("jn-warning");
     let nameWarningText = document.createTextNode(`Can only contain letters and spaces`);
     let nameInput = document.getElementById("name");
     nameWarning.appendChild(nameWarningText);
@@ -175,6 +173,7 @@ function createWarnings() {
 
     let emailWarning = document.createElement("span");
     emailWarning.setAttribute("id", "email-warning");
+    emailWarning.classList.add("jn-warning");
     let emailWarningText = document.createTextNode(`Valid email address required.`);
     let emailInput = document.getElementById("mail");
     emailWarning.appendChild(emailWarningText);
@@ -182,6 +181,7 @@ function createWarnings() {
 
     let cardNumberWarning = document.createElement("span");
     cardNumberWarning.setAttribute("id", "card-number-warning");
+    cardNumberWarning.classList.add("jn-warning");
     let cardWarningText = document.createTextNode(`Must be 16 digits`);
     let cardNumberInput = document.getElementById("cc-num");
     cardNumberWarning.appendChild(cardWarningText);
@@ -189,6 +189,7 @@ function createWarnings() {
 
     let zipCodeWarning = document.createElement("span");
     zipCodeWarning.setAttribute("id", "zip-warning");
+    zipCodeWarning.classList.add("jn-warning");
     let zipCodeWarningText = document.createTextNode(`Must be 5 digits`);
     let zipCodeInput = document.getElementById("zip");
     zipCodeWarning.appendChild(zipCodeWarningText);
@@ -196,6 +197,7 @@ function createWarnings() {
 
     let cvvWarning = document.createElement("span");
     cvvWarning.setAttribute("id", "cvv-warning");
+    cvvWarning.classList.add("jn-warning");
     let cvvWarningText = document.createTextNode(`Must be 3 digits`);
     let cvvInput = document.getElementById("cvv");
     cvvWarning.appendChild(cvvWarningText);
