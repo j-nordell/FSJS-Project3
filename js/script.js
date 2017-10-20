@@ -48,9 +48,14 @@ function setFocusOnElement(element) {
 }
 
 function displayOtherField(setting) {
-    const otherField = document.getElementById("other-role");
-    otherField.style.display = setting;
+    document.getElementById("other-role").style.display = setting;
 }
+
+
+function getColorOptions() {
+    return document.getElementById("color").getElementsByTagName("option");
+}
+
 
 function stripExtraColorText() {
     let colorOptions = getColorOptions();
@@ -58,10 +63,6 @@ function stripExtraColorText() {
     for(let i = 0; i < colorOptions.length; i++) {
        colorOptions[i].innerHTML = colorOptions[i].innerHTML.replace(/\s\((.){1,}\)/g, "");
     }
-}
-
-function getColorOptions() {
-    return document.getElementById("color").getElementsByTagName("option");
 }
 
 function createSelectColorOption() {
