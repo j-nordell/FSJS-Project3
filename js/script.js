@@ -2,7 +2,7 @@
 // Project 3 - Full Stack JavaScript Techdegree
 // Form traversal and validation
 // Jennifer Nordell
-
+/* jshint browser: true */
 
 
 // ========================
@@ -113,7 +113,7 @@ function createCostText() {
 
 function updateCostText() {
     const costText = document.getElementById("cost");
-    
+
     costText.innerHTML = `Total cost: $${activitiesCost}`;
     costText.style.display = activitiesCost ? "block" : "none";
 }
@@ -131,7 +131,7 @@ function checkAvailability(activityIndex) {
         case 2:
             activitiesSelections[4].disabled = activitiesSelections[activityIndex].checked;
             break;
-        case 3: 
+        case 3:
             activitiesSelections[1].disabled = activitiesSelections[activityIndex].checked;
             break;
         case 4:
@@ -225,11 +225,12 @@ function listenToActivitySelection() {
 // Payment Info
 paymentSelect.addEventListener("change", function() {
     resetDefaultPayment();
- 
-    if(this.value != "credit card") {
-      return document.getElementById(this.value).style.display = "block";
-    } 
-    document.getElementById("credit-card").style.display = "block";
+    let id = this.value;
+    if(id == "credit card") {
+        id = "credit-card";
+    }
+
+    document.getElementById(id).style.display = "block";
 });
 
 function createListener(validator) {
@@ -239,7 +240,7 @@ function createListener(validator) {
         const showWarning = text !== "" && !valid;
         const warning = e.target.nextElementSibling;
         toggleWarning(showWarning, warning);
-    }
+    };
 }
 
 document.getElementById("name").addEventListener("input", createListener(isValidName));
@@ -274,7 +275,7 @@ function isValidZipcode(zipcode) {
 
 function isValidCVV(cvv) {
     return /^\d{3}$/.test(cvv);
-} 
+}
 
 
 // ==================
