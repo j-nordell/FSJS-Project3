@@ -19,7 +19,6 @@ const paymentSelect = document.getElementById("payment");
 const colorDict = {};
 
 let activitiesCost = 0;
-let colorOptions = document.getElementById("color").getElementsByTagName("option");
 
 
 // ========================
@@ -32,7 +31,6 @@ displayOtherField("none");
 resetDefaultPayment();
 stripExtraColorText();
 createSelectColorOption();
-colorOptions = document.getElementById("color").getElementsByTagName("option");
 setupColorDict();
 populateShirtLists();
 listenToActivitySelection();
@@ -55,14 +53,20 @@ function displayOtherField(setting) {
 }
 
 function stripExtraColorText() {
+    let colorOptions = getColorOptions();
+
     for(let i = 0; i < colorOptions.length; i++) {
        colorOptions[i].innerHTML = colorOptions[i].innerHTML.replace(/\s\((.){1,}\)/g, "");
     }
 }
 
+function getColorOptions() {
+    return document.getElementById("color").getElementsByTagName("option");
+}
+
 function createSelectColorOption() {
     const selectPromptOption = new Option("Please select a T-shirt theme");
-    colorSelect.insertBefore(selectPromptOption, colorOptions[6]);
+    colorSelect.insertBefore(selectPromptOption, getColorOptions()[6]);
 }
 
 function resetDefaultPayment() {
@@ -74,6 +78,7 @@ function resetDefaultPayment() {
 }
 
 function setupColorDict() {
+    let colorOptions = getColorOptions();
     colorDict[designOptions[0].innerHTML] = [colorOptions[6].innerHTML];
     colorDict[designOptions[1].innerHTML] = [colorOptions[0].innerHTML, colorOptions[1].innerHTML, colorOptions[2].innerHTML];
     colorDict[designOptions[2].innerHTML] = [colorOptions[3].innerHTML, colorOptions[4].innerHTML, colorOptions[5].innerHTML];
@@ -113,9 +118,7 @@ function updateCostText() {
 }
 
 function adjustCost(activityIndex) {
-    let adjustment = 0;
-
-    adjustment = activityIndex ? 100 : 200;
+    const adjustment = activityIndex ? 100 : 200;
     activitiesCost += activitiesSelections[activityIndex].checked ? adjustment : adjustment * -1;
 }
 
@@ -142,7 +145,7 @@ function createWarnings() {
     const nameWarning = document.createElement("span");
     nameWarning.setAttribute("id", "name-warning");
     nameWarning.classList.add("jn-warning");
-    const nameWarningText = document.createTextNode(`Can only contain constters and spaces`);
+    const nameWarningText = document.createTextNode(`Can only contain letters and spaces`);
     const nameInput = document.getElementById("name");
     nameWarning.appendChild(nameWarningText);
     nameInput.insertAdjacentElement("afterend", nameWarning);
@@ -201,17 +204,11 @@ function toggleWarning(show, warning) {
 
 // Job role
 jobRoleSelect.addEventListener("change", function() {
-    if(this.value == "other") {
-        displayOtherField("block");
-    } else {
-        displayOtherField("none");
-    }
+    displayOtherField(this.value == "other" ? "block" : "none");
 });
 
 // T-Shirt info
-designSelect.addEventListener("change", function() {
-    populateShirtLists();
-});
+designSelect.addEventListener("change", populateShirtLists);
 
 // Activity Registration
 function listenToActivitySelection() {
@@ -259,7 +256,7 @@ document.getElementById("cc-num").addEventListener("blur", e => {
 // ================
 
 function isValidName(name) {
-    return  /^\D+$/.test(name);
+    return /^\D+$/.test(name);
 }
 
 function isValidEmail(email) {
