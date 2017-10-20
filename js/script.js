@@ -123,23 +123,34 @@ function adjustCost(activityIndex) {
     activitiesCost += activitiesSelections[activityIndex].checked ? adjustment : adjustment * -1;
 }
 
+function toggleConflict(element, state) {
+    state ? element.classList.add("conflict") : element.classList.remove("conflict");
+}
+
 function checkAvailability(activityIndex) {
     switch(activityIndex) {
         case 1:
             activitiesSelections[3].disabled = activitiesSelections[activityIndex].checked;
+            // activitiesSelections[3].parentNode.classList.add("conflict");
+            toggleConflict(activitiesSelections[3].parentNode, activitiesSelections[3].disabled);
             break;
         case 2:
             activitiesSelections[4].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[4].parentNode, activitiesSelections[4].disabled);
             break;
         case 3:
             activitiesSelections[1].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[1].parentNode, activitiesSelections[1].disabled);
             break;
         case 4:
             activitiesSelections[2].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[2].parentNode, activitiesSelections[2].disabled);
             break;
         default:
             break;
     }
+
+    
 }
 
 function createWarnings() {
