@@ -61,8 +61,8 @@ function getColorOptions() {
 function stripExtraColorText() {
     let colorOptions = getColorOptions();
 
-    for(let i = 0; i < colorOptions.length; i++) {
-       colorOptions[i].innerHTML = colorOptions[i].innerHTML.replace(/\s\((.){1,}\)/g, "");
+    for(let option of colorOptions) {
+        option.innerHTML = option.innerHTML.replace(/\s\((.){1,}\)/g, "");
     }
 }
 
@@ -74,8 +74,8 @@ function createSelectColorOption() {
 function resetDefaultPayment() {
     const paymentTypes = ["credit-card", "paypal", "bitcoin"];
 
-    for(let i = 0; i < paymentTypes.length; i++) {
-        document.getElementById(paymentTypes[i]).style.display = "none";
+    for(let type of paymentTypes) {
+        document.getElementById(type).style.display = "none";
     }
 }
 
@@ -96,6 +96,7 @@ function populateShirtLists() {
     const colors = colorDict[designSelection];
 
     if(colors) {
+
         for(let i = 0; i < colors.length; i++) {
             const color = new Option(colors[i], i);
             colorSelect.options.add(color);
@@ -171,7 +172,7 @@ function createWarnings() {
     const cardNumberWarning = document.createElement("span");
     cardNumberWarning.setAttribute("id", "card-number-warning");
     cardNumberWarning.classList.add("jn-warning");
-    const cardWarningText = document.createTextNode(`Must be 16 digits`);
+    const cardWarningText = document.createTextNode(`Must be 13 - 16 digits`);
     const cardNumberInput = document.getElementById("cc-num");
     cardNumberWarning.appendChild(cardWarningText);
     cardNumberInput.insertAdjacentElement("afterend", cardNumberWarning);
@@ -198,8 +199,8 @@ function createWarnings() {
 function hideAllWarnings() {
     const warningIds = ["name-warning", "email-warning", "card-number-warning", "zip-warning", "cvv-warning"];
 
-    for(let i = 0; i < warningIds.length; i++) {
-        document.getElementById(warningIds[i]).style.display = "none";
+    for(let warning of warningIds) {
+        document.getElementById(warning).style.display = "none";
     }
 }
 
@@ -263,9 +264,6 @@ document.getElementById("cc-num").addEventListener("input", createListener(isVal
 document.getElementById("zip").addEventListener("input", createListener(isValidZipcode));
 document.getElementById("cvv").addEventListener("input", createListener(isValidCVV));
 
-document.getElementById("cc-num").addEventListener("blur", e => {
-    e.target.value = formatCreditCard(e.target.value);
-});
 
 // ================
 // Validators
@@ -280,7 +278,7 @@ function isValidEmail(email) {
 }
 
 function isValidCardNumber(cardNumber) {
-    return /^\d{4}\D*\D*\d{4}\D*\d{4}\D*\d{4}D*$/.test(cardNumber);
+    return /^\d{13,16}D*$/.test(cardNumber);
 }
 
 function isValidZipcode(zipcode) {
@@ -289,16 +287,6 @@ function isValidZipcode(zipcode) {
 
 function isValidCVV(cvv) {
     return /^\d{3}$/.test(cvv);
-}
-
-
-// ==================
-// Field formatting
-// ==================
-
-function formatCreditCard(cardNumber) {
-    const regex = /^(\d{4})\D*\D*(\d{4})\D*(\d{4})\D*(\d{4})D*$/;
-    return cardNumber.replace(regex, `$1 $2 $3 $4`);
 }
 
 
