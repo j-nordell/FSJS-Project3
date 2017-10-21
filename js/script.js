@@ -33,6 +33,7 @@ stripExtraColorText();
 createSelectColorOption();
 setupColorDict();
 populateShirtLists();
+displayColorMenu("none");
 listenToActivitySelection();
 createCostText();
 updateCostText();
@@ -102,6 +103,10 @@ function populateShirtLists() {
             colorSelect.options.add(color);
         }
     }
+}
+
+function displayColorMenu(displayStyle) {
+    document.getElementById("colors-js-puns").style.display = displayStyle;
 }
 
 function createCostText() {
@@ -224,7 +229,11 @@ jobRoleSelect.addEventListener("change", function() {
 });
 
 // T-Shirt info
-designSelect.addEventListener("change", populateShirtLists);
+// designSelect.addEventListener("change", populateShirtLists);
+designSelect.addEventListener("change", function() {
+    populateShirtLists();
+    designSelect.value == "select theme" ? displayColorMenu("none") : displayColorMenu("block");
+});
 
 // Activity Registration
 function listenToActivitySelection() {

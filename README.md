@@ -20,9 +20,9 @@ To complete this project, follow the instructions below. If you get stuck, ask a
 - [x] As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
 ### Payment Info section of the form:
 - [x] Display payment sections based on the payment option chosen in the select menu
-- [ ] The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
-- [ ] When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
-- [ ] When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
+- [x] The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+- [x] When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+- [x] When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
 ### Form validation:
 - [ ] If any of the following validation errors exist, prevent the user from submitting the form:
 - [ ] Name field can't be blank
