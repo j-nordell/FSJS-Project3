@@ -37,6 +37,7 @@ listenToActivitySelection();
 createCostText();
 updateCostText();
 createWarnings();
+selectCreditCard();
 
 
 // ========================
@@ -131,7 +132,6 @@ function checkAvailability(activityIndex) {
     switch(activityIndex) {
         case 1:
             activitiesSelections[3].disabled = activitiesSelections[activityIndex].checked;
-            // activitiesSelections[3].parentNode.classList.add("conflict");
             toggleConflict(activitiesSelections[3].parentNode, activitiesSelections[3].disabled);
             break;
         case 2:
@@ -149,8 +149,6 @@ function checkAvailability(activityIndex) {
         default:
             break;
     }
-
-    
 }
 
 function createWarnings() {
@@ -207,6 +205,11 @@ function hideAllWarnings() {
 
 function toggleWarning(show, warning) {
     warning.style.display = show ? "inherit" : "none";
+}
+
+function selectCreditCard() {
+    document.getElementById("payment").value = "credit card";
+    document.getElementById("credit-card").style.display = "block";
 }
 
 
