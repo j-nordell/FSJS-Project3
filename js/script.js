@@ -2,7 +2,7 @@
 // Project 3 - Full Stack JavaScript Techdegree
 // Form traversal and validation
 // Jennifer Nordell
-
+/* jshint browser: true */
 
 
 // ========================
@@ -19,7 +19,6 @@ const paymentSelect = document.getElementById("payment");
 const colorDict = {};
 
 let activitiesCost = 0;
-let colorOptions = document.getElementById("color").getElementsByTagName("option");
 
 
 // ========================
@@ -32,13 +31,14 @@ displayOtherField("none");
 resetDefaultPayment();
 stripExtraColorText();
 createSelectColorOption();
-colorOptions = document.getElementById("color").getElementsByTagName("option");
 setupColorDict();
 populateShirtLists();
+displayColorMenu("none");
 listenToActivitySelection();
 createCostText();
 updateCostText();
 createWarnings();
+selectCreditCard();
 
 
 // ========================
@@ -50,30 +50,38 @@ function setFocusOnElement(element) {
 }
 
 function displayOtherField(setting) {
-    const otherField = document.getElementById("other-role");
-    otherField.style.display = setting;
+    document.getElementById("other-role").style.display = setting;
 }
 
+
+function getColorOptions() {
+    return document.getElementById("color").getElementsByTagName("option");
+}
+
+
 function stripExtraColorText() {
-    for(let i = 0; i < colorOptions.length; i++) {
-       colorOptions[i].innerHTML = colorOptions[i].innerHTML.replace(/\s\((.){1,}\)/g, "");
+    let colorOptions = getColorOptions();
+
+    for(let option of colorOptions) {
+        option.innerHTML = option.innerHTML.replace(/\s\((.){1,}\)/g, "");
     }
 }
 
 function createSelectColorOption() {
     const selectPromptOption = new Option("Please select a T-shirt theme");
-    colorSelect.insertBefore(selectPromptOption, colorOptions[6]);
+    colorSelect.insertBefore(selectPromptOption, getColorOptions()[6]);
 }
 
 function resetDefaultPayment() {
     const paymentTypes = ["credit-card", "paypal", "bitcoin"];
 
-    for(let i = 0; i < paymentTypes.length; i++) {
-        document.getElementById(paymentTypes[i]).style.display = "none";
+    for(let type of paymentTypes) {
+        document.getElementById(type).style.display = "none";
     }
 }
 
 function setupColorDict() {
+    let colorOptions = getColorOptions();
     colorDict[designOptions[0].innerHTML] = [colorOptions[6].innerHTML];
     colorDict[designOptions[1].innerHTML] = [colorOptions[0].innerHTML, colorOptions[1].innerHTML, colorOptions[2].innerHTML];
     colorDict[designOptions[2].innerHTML] = [colorOptions[3].innerHTML, colorOptions[4].innerHTML, colorOptions[5].innerHTML];
@@ -89,11 +97,16 @@ function populateShirtLists() {
     const colors = colorDict[designSelection];
 
     if(colors) {
+
         for(let i = 0; i < colors.length; i++) {
             const color = new Option(colors[i], i);
             colorSelect.options.add(color);
         }
     }
+}
+
+function displayColorMenu(displayStyle) {
+    document.getElementById("colors-js-puns").style.display = displayStyle;
 }
 
 function createCostText() {
@@ -107,31 +120,37 @@ function createCostText() {
 
 function updateCostText() {
     const costText = document.getElementById("cost");
-    
+
     costText.innerHTML = `Total cost: $${activitiesCost}`;
     costText.style.display = activitiesCost ? "block" : "none";
 }
 
 function adjustCost(activityIndex) {
-    let adjustment = 0;
-
-    adjustment = activityIndex ? 100 : 200;
+    const adjustment = activityIndex ? 100 : 200;
     activitiesCost += activitiesSelections[activityIndex].checked ? adjustment : adjustment * -1;
+}
+
+function toggleConflict(element, state) {
+    state ? element.classList.add("conflict") : element.classList.remove("conflict");
 }
 
 function checkAvailability(activityIndex) {
     switch(activityIndex) {
         case 1:
             activitiesSelections[3].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[3].parentNode, activitiesSelections[3].disabled);
             break;
         case 2:
             activitiesSelections[4].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[4].parentNode, activitiesSelections[4].disabled);
             break;
-        case 3: 
+        case 3:
             activitiesSelections[1].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[1].parentNode, activitiesSelections[1].disabled);
             break;
         case 4:
             activitiesSelections[2].disabled = activitiesSelections[activityIndex].checked;
+            toggleConflict(activitiesSelections[2].parentNode, activitiesSelections[2].disabled);
             break;
         default:
             break;
@@ -142,7 +161,7 @@ function createWarnings() {
     const nameWarning = document.createElement("span");
     nameWarning.setAttribute("id", "name-warning");
     nameWarning.classList.add("jn-warning");
-    const nameWarningText = document.createTextNode(`Can only contain constters and spaces`);
+    const nameWarningText = document.createTextNode(`Can only contain letters and spaces`);
     const nameInput = document.getElementById("name");
     nameWarning.appendChild(nameWarningText);
     nameInput.insertAdjacentElement("afterend", nameWarning);
@@ -158,7 +177,7 @@ function createWarnings() {
     const cardNumberWarning = document.createElement("span");
     cardNumberWarning.setAttribute("id", "card-number-warning");
     cardNumberWarning.classList.add("jn-warning");
-    const cardWarningText = document.createTextNode(`Must be 16 digits`);
+    const cardWarningText = document.createTextNode(`Must be 13 - 16 digits`);
     const cardNumberInput = document.getElementById("cc-num");
     cardNumberWarning.appendChild(cardWarningText);
     cardNumberInput.insertAdjacentElement("afterend", cardNumberWarning);
@@ -185,13 +204,18 @@ function createWarnings() {
 function hideAllWarnings() {
     const warningIds = ["name-warning", "email-warning", "card-number-warning", "zip-warning", "cvv-warning"];
 
-    for(let i = 0; i < warningIds.length; i++) {
-        document.getElementById(warningIds[i]).style.display = "none";
+    for(let warning of warningIds) {
+        document.getElementById(warning).style.display = "none";
     }
 }
 
 function toggleWarning(show, warning) {
     warning.style.display = show ? "inherit" : "none";
+}
+
+function selectCreditCard() {
+    document.getElementById("payment").value = "credit card";
+    document.getElementById("credit-card").style.display = "block";
 }
 
 
@@ -201,16 +225,14 @@ function toggleWarning(show, warning) {
 
 // Job role
 jobRoleSelect.addEventListener("change", function() {
-    if(this.value == "other") {
-        displayOtherField("block");
-    } else {
-        displayOtherField("none");
-    }
+    displayOtherField(this.value == "other" ? "block" : "none");
 });
 
 // T-Shirt info
+// designSelect.addEventListener("change", populateShirtLists);
 designSelect.addEventListener("change", function() {
     populateShirtLists();
+    designSelect.value == "select theme" ? displayColorMenu("none") : displayColorMenu("block");
 });
 
 // Activity Registration
@@ -227,11 +249,12 @@ function listenToActivitySelection() {
 // Payment Info
 paymentSelect.addEventListener("change", function() {
     resetDefaultPayment();
- 
-    if(this.value != "credit card") {
-      return document.getElementById(this.value).style.display = "block";
-    } 
-    document.getElementById("credit-card").style.display = "block";
+    let id = this.value;
+    if(id == "credit card") {
+        id = "credit-card";
+    }
+
+    document.getElementById(id).style.display = "block";
 });
 
 function createListener(validator) {
@@ -241,7 +264,7 @@ function createListener(validator) {
         const showWarning = text !== "" && !valid;
         const warning = e.target.nextElementSibling;
         toggleWarning(showWarning, warning);
-    }
+    };
 }
 
 document.getElementById("name").addEventListener("input", createListener(isValidName));
@@ -250,16 +273,13 @@ document.getElementById("cc-num").addEventListener("input", createListener(isVal
 document.getElementById("zip").addEventListener("input", createListener(isValidZipcode));
 document.getElementById("cvv").addEventListener("input", createListener(isValidCVV));
 
-document.getElementById("cc-num").addEventListener("blur", e => {
-    e.target.value = formatCreditCard(e.target.value);
-});
 
 // ================
 // Validators
 // ================
 
 function isValidName(name) {
-    return  /^\D+$/.test(name);
+    return /^\D+$/.test(name);
 }
 
 function isValidEmail(email) {
@@ -267,7 +287,7 @@ function isValidEmail(email) {
 }
 
 function isValidCardNumber(cardNumber) {
-    return /^\d{4}\D*\D*\d{4}\D*\d{4}\D*\d{4}D*$/.test(cardNumber);
+    return /^\d{13,16}D*$/.test(cardNumber);
 }
 
 function isValidZipcode(zipcode) {
@@ -276,16 +296,6 @@ function isValidZipcode(zipcode) {
 
 function isValidCVV(cvv) {
     return /^\d{3}$/.test(cvv);
-} 
-
-
-// ==================
-// Field formatting
-// ==================
-
-function formatCreditCard(cardNumber) {
-    const regex = /^(\d{4})\D*\D*(\d{4})\D*(\d{4})\D*(\d{4})D*$/;
-    return cardNumber.replace(regex, `$1 $2 $3 $4`);
 }
 
 

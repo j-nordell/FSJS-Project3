@@ -137,11 +137,18 @@ button:hover {
 	margin-top: 1.25em;
 }
 
-/* ===================
-	Warning styles
-====================== */
+/* =========================
+Styles by Jennifer Nordell
+============================ */
+
+
 .relative {
 	position: relative;
+}
+
+.conflict {
+	text-decoration: line-through;
+	color: #316074;
 }
 
 .jn-warning {
