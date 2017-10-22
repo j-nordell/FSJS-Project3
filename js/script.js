@@ -38,6 +38,7 @@ listenToActivitySelection();
 createCostText();
 updateCostText();
 createWarnings();
+removeSelectPaymentOption();
 selectCreditCard();
 
 
@@ -211,6 +212,10 @@ function hideAllWarnings() {
 
 function toggleWarning(show, warning) {
     warning.style.display = show ? "inherit" : "none";
+}
+
+function removeSelectPaymentOption() {
+   paymentSelect.remove(0);
 }
 
 function selectCreditCard() {
