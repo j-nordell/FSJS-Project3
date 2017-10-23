@@ -224,13 +224,13 @@ function selectCreditCard() {
 // ========================
 
 // Job role
-jobRoleSelect.addEventListener("change", function() {
-    displayOtherField(this.value == "other" ? "block" : "none");
+jobRoleSelect.addEventListener("change", (e) => {
+    displayOtherField(e.target.value == "other" ? "block" : "none");
 });
 
 // T-Shirt info
 // designSelect.addEventListener("change", populateShirtLists);
-designSelect.addEventListener("change", function() {
+designSelect.addEventListener("change", (e) => {
     populateShirtLists();
     designSelect.value == "select theme" ? displayColorMenu("none") : displayColorMenu("block");
 });
@@ -238,7 +238,7 @@ designSelect.addEventListener("change", function() {
 // Activity Registration
 function listenToActivitySelection() {
     for(let i = 0; i < activitiesSelections.length; i++) {
-        activitiesSelections[i].addEventListener("click", function() {
+        activitiesSelections[i].addEventListener("click", (e) => {
             adjustCost(i);
             updateCostText(i);
             checkAvailability(i);
@@ -247,9 +247,9 @@ function listenToActivitySelection() {
 }
 
 // Payment Info
-paymentSelect.addEventListener("change", function() {
+paymentSelect.addEventListener("change", (e) => {
     resetDefaultPayment();
-    let id = this.value;
+    let id = e.target.value;
     if(id == "credit card") {
         id = "credit-card";
     }
@@ -279,7 +279,7 @@ document.getElementById("cvv").addEventListener("input", createListener(isValidC
 // ================
 
 function isValidName(name) {
-    return /^\D+$/.test(name);
+    return /^[a-zA-Z][a-zA-Z\s]*$/.test(name);
 }
 
 function isValidEmail(email) {
