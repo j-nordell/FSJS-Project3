@@ -151,6 +151,12 @@ Styles by Jennifer Nordell
 	color: #316074;
 }
 
+.empty-field {
+	background: #FCE5A5;
+	border-color: #D96623;
+	transition: border-color .4s, background-color .4s;
+}
+
 .jn-warning {
 	position: relative;
 	background: #d98a23;

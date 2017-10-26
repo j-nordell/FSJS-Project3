@@ -9,6 +9,16 @@
 // Global variables and constants
 // ========================
 
+const mainForm = document.getElementsByTagName("form")[0];
+
+// input fields
+const nameField = mainForm.user_name;
+const emailField = mainForm.mail;
+const ccField = mainForm.user_cc_num;
+const zipField = mainForm.user_zip;
+const cvvField = mainForm.user_cvv;
+
+// Select
 const jobRoleSelect = document.getElementById("title");
 const designSelect = document.getElementById("design");
 const designOptions = designSelect.getElementsByTagName("option");
@@ -16,8 +26,9 @@ const colorSelect = document.getElementById("color");
 const activitySelect = document.getElementsByClassName("activities");
 const activitiesSelections = activitySelect[0].getElementsByTagName("input");
 const paymentSelect = document.getElementById("payment");
-const colorDict = {};
 
+// Misc
+const colorDict = {};
 let activitiesCost = 0;
 
 
@@ -38,6 +49,7 @@ listenToActivitySelection();
 createCostText();
 updateCostText();
 createWarnings();
+createErrors();
 selectCreditCard();
 
 
@@ -213,6 +225,26 @@ function toggleWarning(show, warning) {
     warning.style.display = show ? "inherit" : "none";
 }
 
+function createErrors() {
+    const nameError = document.createElement("div");
+    const nameErrorText = document.createTextNode("\u26A0 Name is required");
+    nameError.setAttribute("id","name-error");
+    nameError.appendChild(nameErrorText);
+    nameField.parentNode.insertBefore(nameError, nameField);
+
+    const emailError = document.createElement("div");
+    const emailErrorText = document.createTextNode("\u26A0 Email is required");
+    emailError.setAttribute("id", "email-error");
+    emailError.appendChild(emailErrorText);
+    emailField.parentNode.insertBefore(emailError, emailField);
+
+    const activityError = document.createElement("div");
+    const activityErrorText = document.createTextNode("At least one activity must be selected");
+    activityError.setAttribute("id", "activity-error");
+    activityError.appendChild(activityErrorText);
+    activitiesSelections.parentNode.insertBefore(activitiesSelections, activitySelect);
+}
+
 function selectCreditCard() {
     document.getElementById("payment").value = "credit card";
     document.getElementById("credit-card").style.display = "block";
@@ -297,8 +329,5 @@ function isValidZipcode(zipcode) {
 function isValidCVV(cvv) {
     return /^\d{3}$/.test(cvv);
 }
-
-
-
 
 
