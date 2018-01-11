@@ -57,6 +57,7 @@ resetActivities();
 listenToActivitySelection();
 createCostText();
 updateCostText();
+removeSelectPaymentOption();
 selectCreditCard();
 
 // ===============================
@@ -287,7 +288,6 @@ function toggleWarning(show, warning) {
     warning.style.display = show ? "inherit" : "none";
 }
 
-
 // Specifically to clear just the CC errors in case payment method is changed from default
 function clearCCErrors() {
     document.getElementById("cc-num-error").style.display = "none";
@@ -303,6 +303,10 @@ function hideAllErrors() {
 
 function toggleError(show, error) {
     document.getElementById(error).style.display = show ? "inherit" : "none";
+}
+
+function removeSelectPaymentOption() {
+   paymentSelect.remove(0);
 }
 
 function selectCreditCard() {
