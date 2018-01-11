@@ -163,7 +163,7 @@ function setFocusOnElement(element) {
 }
 
 function displayOtherField(setting) {
-    document.getElementById("other-role").style.display = setting;
+    document.getElementById("other-title").style.display = setting;
 }
 
 function getColorOptions() {
